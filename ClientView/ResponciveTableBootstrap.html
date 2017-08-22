@@ -1,0 +1,162 @@
+<!DOCTYPE html>   
+<html lang="en">   
+<head>   
+<meta charset="utf-8">   
+<title>Discover Customer Satisfaction Measure Portal</title>   
+<meta name="description" content="Creating a Employee table with Twitter Bootstrap. Learn with example of a Employee Table with Twitter Bootstrap.">  
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">   
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></style>
+<script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+</head>  
+<body style="margin:20px">  
+<h2 style="background-color:orange; text-align:center" >Discover Bank</h2><br>
+<div id="container"></div>
+<div class="container">
+<h2>Customer Analysis Data list</h2><br>
+<table id="myTable" class="table table-striped" >  
+        <thead>  
+          <tr>  
+            <th>SNo</th> 
+            <th>Name</th>  
+            <th>Employee_Id</th>
+			<th>Probability</th>
+			<th>Reviews</th>
+          </tr>  
+        </thead>  
+        <tbody>            
+        </tbody>  
+      </table>  
+</div>
+</body>  
+<script>
+$(document).ready(function(){
+var json = {
+  "data": [
+    {
+	"SNo":"1",
+    "name": "Naren",
+    "empId": "1001",
+    "prob": "65",
+	"reviews":["review1","review2"]
+    },{
+	"SNo":"2",
+    "name": "Suresh",
+    "empId": "1002",
+    "prob": "42",
+	"reviews":["review1","review2"]
+    },{
+	"SNo":"3",
+    "name": "Mahesh",
+    "empId": "1005",
+    "prob": "55",
+	"reviews":["review1","review2"]
+    },{
+	"SNo":"4",
+    "name": "Harish",
+    "empId": "1004",
+    "prob": "85",
+	"reviews":["review1","review2"]
+    },{
+	"SNo":"5",
+    "name": "Praveen",
+    "empId": "1009",
+    "prob": "62",
+	"reviews":["review1","review2"]
+    },{
+	"SNo":"6",
+    "name": "Basha",
+    "empId": "1008",
+    "prob": "60",
+	"reviews":["review1","review2"]
+    },{
+	"SNo":"7",
+    "name": "Naren",
+    "empId": "1001",
+    "prob": "65",
+	"reviews":["review1","review2"]
+    },{
+	"SNo":"8",
+    "name": "Naren",
+    "empId": "1001",
+    "prob": "65",
+	"reviews":["review1","review2"]
+    },{
+	"SNo":"9",
+    "name": "Naren",
+    "empId": "1001",
+    "prob": "65",
+	"reviews":["review1","review2"]
+    },{
+	"SNo":"10",
+    "name": "Naren",
+    "empId": "1001",
+    "prob": "65",
+	"reviews":["review1","review2"]
+    },{
+	"SNo":"11",
+    "name": "Naren",
+    "empId": "1001",
+    "prob": "65",
+	"reviews":["review1","review2"]
+    },{
+	"SNo":"12",
+    "name": "Naren",
+    "empId": "1001",
+    "prob": "65",
+	"reviews":["review1","review2"]
+    }
+	,{
+	"SNo":"13",
+    "name": "Naren",
+    "empId": "1001",
+    "prob": "65",
+	"reviews":["review1","review2"]
+    }
+    ]
+};
+
+for(i=0;i<json.data.length;i++){
+var newRowContent = "<tr><td>"+json.data[i].SNo+"</td><td>"+json.data[i].name+"</td><td>"+json.data[i].empId+"</td><td>"+json.data[i].prob+"</td><td><a>reviews</a></td></tr>";
+jQuery("#myTable tbody").append(newRowContent);
+}
+    $('#myTable').dataTable();
+});
+</script>
+<script>
+Highcharts.chart('container', {
+    chart: {
+        type: 'line'
+    },
+    title: {
+        text: 'Customer DisSatisfaction Measure'
+    },
+    subtitle: {
+        text: 'discover.com'
+    },
+    xAxis: {
+        categories: ['40-55', '55-70', '70-85', '85-100']
+    },
+    yAxis: {
+        title: {
+            text: 'No of Customers'
+        }
+    },
+    plotOptions: {
+        line: {
+            dataLabels: {
+                enabled: true
+            },
+            enableMouseTracking: false
+        }
+    },
+    series: [{
+        name: 'Probability (%)',
+        data: [13500,8000,10200,8500]
+    }]
+});</script>
+
+</html>  
