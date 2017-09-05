@@ -26,7 +26,7 @@ import com.discover.dbconn.DBConnection;
 import com.discover.pojo.CustomerReviewDetails;
 
 /**
- * Analyzes user feedback data, processes the data and save to database 
+ * Analyzes user feedback data, processes the data and save to database
  * 
  * @author Vijay Sagaram
  */
@@ -55,6 +55,7 @@ public class AnalyticsMain {
 		String newWords = "{\n\"";
 		for (CustomerReviewDetails cRDetails : reviewsList) {
 			String review = cRDetails.getMessage().toLowerCase();
+			review = review.replaceAll("[^a-zA-Z'\\s]", " ");
 			reviewFinalProb = 0;
 			reviewsWordCount = 0;
 			String splWordsArr[] = searchForSpecialWords(review);
@@ -101,7 +102,8 @@ public class AnalyticsMain {
 			}
 			reviewFinalProb = reviewFinalProb / reviewsWordCount;
 			cRDetails.setProbability(reviewFinalProb);
-	}// end of reviewsList loop
+			System.out.println(reviewFinalProb);
+		} // end of reviewsList loop
 		DBConnection.saveAlanyticData(reviewsList);
 		saveNewWords(newWords + "\":\"\"\n}");
 		System.out.println(start - System.currentTimeMillis());
@@ -182,40 +184,22 @@ public class AnalyticsMain {
 		String reviewWord;
 		for (int i = 0; i < reviewWordsArray.length; i++) {
 			reviewWord = reviewWordsArray[i];
-			int len = reviewWord.length();
-			String lastChar = reviewWord.substring(len - 1);
-			if (lastChar.matches("[,.:!]")) {
-				reviewWord = reviewWord.substring(0, len - 1);
-			}
-			String wordArr[] = reviewWord.split("\\.");
-			boolean checked = false;
-			boolean hasStopWords = false;
-			if (wordArr.length > 1) {
-				for (String str : wordArr) {
-					if (stopWordsmap.get(str) == null) {
-						cleanedReview = cleanedReview + " " + str;
-						checked = true;
-					} else {
-						hasStopWords = true;
-					}
-				}
-			}
 			review.replaceAll(reviewWord, "");
-			if (stopWordsmap.get(reviewWord) == null && !checked && !hasStopWords) {
+			if (stopWordsmap.get(reviewWord) == null) {
 				cleanedReview = cleanedReview + " " + reviewWord;
 			}
 		}
 		return cleanedReview;
 	}
-	
-/**
- * reads file(json) and convert to string format
- *  
- * @param fileName
- * @return
- * @throws FileNotFoundException
- * @throws IOException
- */
+
+	/**
+	 * reads file(json) and convert to string format
+	 * 
+	 * @param fileName
+	 * @return
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
 	private static String readFile(String fileName) throws FileNotFoundException, IOException {
 		FileInputStream fis = new FileInputStream(new File(fileName));
 		InputStreamReader isr = new InputStreamReader(fis);
